@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import cv2
+
+
+# In[2]:
+
+
+import os
+
+
+# In[3]:
+
+
+os.chdir('D:\Spark datasets')
+
+
+# In[4]:
+
+
+cascade_src = 'two_wheeler.xml'
+
+
+# In[5]:
+
+
+video_src = 'two_wheeler2.mp4'
+
+
+# In[6]:
+
+
+cap = cv2.VideoCapture(video_src)
+
+
+# In[7]:
+
+
+car_cascade = cv2.CascadeClassifier(cascade_src)
+
+
+# In[8]:
+
+
+while True:
+    ret, img = cap.read()
+    
+    if (type(img) == type(None)):
+        break
+    
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    cars = car_cascade.detectMultiScale(gray,1.01, 1)
+
+
+    for (x,y,w,h) in cars:
+        cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,215),2)
+    
+    cv2.imshow('video', img)
+    
+    if cv2.waitKey(33) == 27:
+        break
+
+cv2.destroyAllWindows()
+
+
+# In[ ]:
+
+
+
+
